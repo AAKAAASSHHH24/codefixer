@@ -14,8 +14,6 @@ openai.api_key = os.getenv('openai_api_key')
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        if usage_counter > 3:
-            return render_template("payment.html")
         # Code Errr
         code = request.form["code"]
         error = request.form["error"]
@@ -45,8 +43,6 @@ def index():
             temperature=0.9,
         )
         fixed_code = fixed_code_completions.choices[0].text
-        usage_counter += 1
-        update_usage_counter(fingerprint, usage_counter)
 
         return render_template("index.html",
                                explanation=explanation,
